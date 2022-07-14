@@ -1,0 +1,28 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "kube-hunter.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  template:
+    metadata:
+      labels:
+        app: {{ include "kube-hunter.fullname" . }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["kube-hunter"]
+          args:
+            - "--pod"
+            - "--interface"
+            - "--include-patched-versions"
+            - "--statistics"
+            - "--active"
+            - "--k8s-auto-discover-nodes"
+      restartPolicy: Never
