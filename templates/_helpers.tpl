@@ -23,3 +23,11 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "kube-hunter.schedule" -}}
+{{- if .Values.schedule -}}
+{{- .Values.schedule | quote | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- "0 0 * * *" -}}
+{{- end -}}
+{{- end -}}

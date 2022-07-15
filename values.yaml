@@ -7,3 +7,5 @@ image:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+schedule: "*/5 * * * *"
