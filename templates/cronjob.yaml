@@ -6,6 +6,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   schedule: {{ include "kube-hunter.schedule" . }}
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
